@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import Formulario from './Components/Formulario';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
+    <Fragment>
+      <Formulario 
+      text='formulario'
+      />
+    </Fragment>
   );
 }
 
