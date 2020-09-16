@@ -5,7 +5,6 @@ function App() {
   return (
     <Fragment>
       <Formulario 
-      text='formulario'
       />
     </Fragment>
   );
