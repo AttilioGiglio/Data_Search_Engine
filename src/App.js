@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Formulario from './Components/Formulario';
 import axios from 'axios';
 import Cancion from './Components/Cancion'
@@ -7,22 +7,29 @@ function App() {
   // definir el state
   const [busquedaLetra, guardarBusquedaLetra] = useState({});
   const [letra, guardarLetra] = useState('');
+  const[info, guardarInfo] = useState({});
 
   useEffect(() => {
-    if(Object.keys(busquedaLetra).length===0)return;
-    const consultarApi = async () => {
-      const {artista, cancion} = busquedaLetra;
-      const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
-      const resultado= await axios.get(url);
-     guardarLetra(resultado.data.lyrics);
+    if (Object.keys(busquedaLetra).length === 0) return;
+    const consultarApiLetra = async () => {
+      const { artista, cancion } = busquedaLetra;
+      const url1 = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
+      const url2 = `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artista}`
+      // Para que el fetch de las 2 apis inicien simultaneamente sin esperar a la otra.
+      const [letra, informacion] = await Promise.all([
+        axios.get(url1),
+        axios.get(url2)
+      ])
+      guardarLetra(letra.data.lyrics);
+      guardarInfo(informacion.data.artist[0])
     }
-    consultarApi();
+    consultarApiLetra();
   }, [busquedaLetra])
 
   return (
     <Fragment>
-      <Formulario 
-      guardarBusquedaLetra={guardarBusquedaLetra}
+      <Formulario
+        guardarBusquedaLetra={guardarBusquedaLetra}
       />
       <div className='container mt-5'>
         <div className='row'>
@@ -30,8 +37,8 @@ function App() {
 
           </div>
           <div className='col-md-6'>
-            <Cancion 
-            letra={letra}
+            <Cancion
+              letra={letra}
             />
           </div>
         </div>
