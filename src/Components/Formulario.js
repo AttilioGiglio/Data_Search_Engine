@@ -67,7 +67,7 @@ const Formulario = ({guardarBusquedaLetra}) => {
                                 type='submit'
                                 className='btn btn-primary float-right'
                             >
-                                Buscar
+                                Search
                             </button>
                         </fieldset>
                     </form>

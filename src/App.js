@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Formulario from './Components/Formulario';
 import axios from 'axios';
+import Cancion from './Components/Cancion'
 
 function App() {
   // definir el state
@@ -13,7 +14,7 @@ function App() {
       const {artista, cancion} = busquedaLetra;
       const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
       const resultado= await axios.get(url);
-      console.log(resultado);
+     guardarLetra(resultado.data.lyrics);
     }
     consultarApi();
   }, [busquedaLetra])
@@ -23,6 +24,18 @@ function App() {
       <Formulario 
       guardarBusquedaLetra={guardarBusquedaLetra}
       />
+      <div className='container mt-5'>
+        <div className='row'>
+          <div className='col-md-6'>
+
+          </div>
+          <div className='col-md-6'>
+            <Cancion 
+            letra={letra}
+            />
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 }
