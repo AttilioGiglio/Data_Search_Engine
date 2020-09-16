@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import Error from './Error';
 
-const Formulario = () => {
+const Formulario = ({guardarBusquedaLetra}) => {
 
     const [busqueda, guardarBusqueda] = useState({
         artista: '',
@@ -23,13 +24,14 @@ const Formulario = () => {
             return;
         }
         guardarError(false);
+        guardarBusquedaLetra(busqueda);
     }     
 
     return (
         <div className='bg-info'>
+            {error ? <Error mensaje='Favor completar los campos de nombres de artista y cancion' /> : null}
             <div className='container'>
                 <div className='row'>
-                    {}
                     <form onSubmit={buscarInformacion} className='col card text-white bg-transparent mb-5 pt-5 pb-2'>
                         <fieldset>
                             <legend className='text-center'>
