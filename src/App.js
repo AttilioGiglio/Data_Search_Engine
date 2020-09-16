@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Formulario from './Components/Formulario';
 import axios from 'axios';
-import Cancion from './Components/Cancion'
+import Cancion from './Components/Cancion';
+import Info from './Components/Info';
 
 function App() {
   // definir el state
@@ -21,10 +22,10 @@ function App() {
         axios.get(url2)
       ])
       guardarLetra(letra.data.lyrics);
-      guardarInfo(informacion.data.artist[0])
+      guardarInfo(informacion.data.artists[0])
     }
     consultarApiLetra();
-  }, [busquedaLetra])
+  }, [busquedaLetra, info])
 
   return (
     <Fragment>
@@ -34,7 +35,9 @@ function App() {
       <div className='container mt-5'>
         <div className='row'>
           <div className='col-md-6'>
-
+          <Info 
+          info={info}
+          />
           </div>
           <div className='col-md-6'>
             <Cancion
